@@ -1,0 +1,19 @@
+{
+    "useTabs": true,
+    "tabWidth": 4,
+    "printWidth": 80,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "semi": true,
+    "arrowParens": "always",
+    "overrides": [
+      {
+        "files": "*.{ts,tsx,js,mjs,cjs}",
+        "options": {
+          "parser": "typescript"
+        }
+      }
+    ]
+  }

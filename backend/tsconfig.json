@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "baseUrl": "./src",
+      "declaration": true,
+      "emitDecoratorMetadata": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "forceConsistentCasingInFileNames": true,
+      "importHelpers": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "noEmit": false,
+      "outDir": "./dist",
+      "pretty": true,
+      "resolveJsonModule": true,
+      "rootDir": "./src",
+      "sourceMap": true,
+      "target": "esnext",
+      "paths": {
+        "@/*": ["./*"]
+      },
+      "rootDirs": ["./src"]
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules", "dist"]
+  }
