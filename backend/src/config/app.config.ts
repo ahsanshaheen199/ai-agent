@@ -9,4 +9,5 @@ export const appConfig = {
 	DB_PASSWORD: getEnv('DB_PASSWORD'),
 	DB_NAME: getEnv('DB_NAME'),
 	NODE_ENV: getEnv('NODE_ENV', 'development'),
+	JWT_SECRET: getEnv('JWT_SECRET'),
 };
