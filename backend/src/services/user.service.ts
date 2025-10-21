@@ -5,6 +5,8 @@ import { BadRequestError } from 'routing-controllers';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { Subscription } from '@/database/entities/subscription.entity';
+import bcrypt from 'bcrypt';
+import { LoginDto } from '@/dtos/login.dto';
 
 @Service()
 export class UserService {
@@ -57,5 +59,26 @@ export class UserService {
 		} finally {
 			await queryRunner.release();
 		}
+	}
+
+	async loginUser(loginDto: LoginDto) {
+		const user = await this.userRepository.findOne({
+			where: { email: loginDto.email },
+		});
+
+		if (!user) {
+			throw new BadRequestError('Invalid email or password');
+		}
+
+		const isPasswordValid = await bcrypt.compare(
+			loginDto.password,
+			user.password
+		);
+
+		if (!isPasswordValid) {
+			throw new BadRequestError('Invalid email or password');
+		}
+
+		return user;
 	}
 }

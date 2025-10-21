@@ -9,15 +9,30 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "../ui/field";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldError,
+} from "../ui/field";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { useActionState } from "react";
-import { signup } from "@/actions/signup";
+import { useActionState, useEffect } from "react";
+import { signin } from "@/actions/signin";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const SignInForm = () => {
-  const [state, formAction, isPending] = useActionState(signup, null);
+  const [state, formAction, isPending] = useActionState(signin, null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success) {
+      localStorage.setItem("token", state.token);
+      router.replace("/home");
+    }
+  }, [state]);
 
   return (
     <div className={cn("flex flex-col gap-6")}>
@@ -30,7 +45,7 @@ export const SignInForm = () => {
         </CardHeader>
         <CardContent>
           {state?.error && (
-            <div className="text-destructive text-sm font-normal">
+            <div className="text-destructive text-sm font-normal mb-4">
               {state.error}
             </div>
           )}
@@ -40,14 +55,20 @@ export const SignInForm = () => {
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
-                  required
                 />
+                {state?.errors?.email && (
+                  <FieldError errors={[{ message: state.errors.email }]} />
+                )}
               </Field>
               <Field className="gap-2">
                 <FieldLabel htmlFor="password">Password</FieldLabel>
-                <Input id="password" type="password" required />
+                <Input id="password" name="password" type="password" />
+                {state?.errors?.password && (
+                  <FieldError errors={[{ message: state.errors.password }]} />
+                )}
               </Field>
               <Field>
                 <Button type="submit" disabled={isPending}>
