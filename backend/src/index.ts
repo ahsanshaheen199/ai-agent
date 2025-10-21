@@ -9,6 +9,7 @@ import Container from 'typedi';
 import cookieParser from 'cookie-parser';
 import { appConfig } from './config/app.config';
 import { CustomErrorHandler } from './middlewares/error-handler.middleware';
+import { initializeDataSource } from './database/data-source';
 
 const app = express();
 
@@ -35,5 +36,6 @@ useExpressServer(app, {
 });
 
 app.listen(appConfig.PORT, async () => {
+	await initializeDataSource();
 	console.log(`Server is running on port ${appConfig.PORT}`);
 });
