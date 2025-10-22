@@ -15,22 +15,22 @@ export const NavMenus = () => {
   const mainMenus = [
     {
       label: "Home",
-      href: "/",
+      href: "/home",
       icon: HomeIcon,
     },
     {
       label: "Chat",
-      href: "/",
+      href: "/chat",
       icon: MessageCircleIcon,
     },
     {
       label: "Billing",
-      href: "/",
+      href: "/billing",
       icon: CreditCardIcon,
     },
     {
       label: "Settings",
-      href: "/",
+      href: "/settings",
       icon: CogIcon,
     },
   ];

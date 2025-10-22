@@ -10,6 +10,7 @@ import {
 import { AppLogo } from "../logo";
 import { NavMenus } from "./nav-menus";
 import { NavUser } from "./nav-user";
+import { NavNotes } from "./nav-notes";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -24,6 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent className="px-2 pt-2 overflow-x-hidden">
         <NavMenus />
+        <NavNotes />
       </SidebarContent>
       <SidebarFooter>
         <hr className="border-border mx-2 -mt-px" />

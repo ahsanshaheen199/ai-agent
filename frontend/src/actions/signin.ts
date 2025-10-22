@@ -62,7 +62,7 @@ export async function signin(prevState: unknown, formData: FormData) {
   cookieStore.set("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    expires: new Date(Date.now() + 60 * 60 * 24 * 7),
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     sameSite: "lax",
   });
 
