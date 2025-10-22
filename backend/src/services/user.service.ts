@@ -81,4 +81,16 @@ export class UserService {
 
 		return user;
 	}
+
+	async currentUser(userId: string) {
+		const user = await this.userRepository.findOne({
+			where: { id: userId },
+		});
+
+		if (!user) {
+			throw new BadRequestError('User not found');
+		}
+
+		return user;
+	}
 }

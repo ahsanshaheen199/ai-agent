@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import 'dotenv/config';
 
 import express, { Request, Response } from 'express';
+import './config/passport.config';
 import passport from 'passport';
 import { useContainer, useExpressServer } from 'routing-controllers';
 import path from 'path';
