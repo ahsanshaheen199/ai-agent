@@ -6,6 +6,7 @@ import {
 	Param,
 	Patch,
 	Post,
+	QueryParams,
 	Req,
 	UseBefore,
 } from 'routing-controllers';
@@ -14,6 +15,7 @@ import { Body, Res } from 'routing-controllers';
 import { Service } from 'typedi';
 import { CreateNoteDto } from '@/dtos/create-note.dto';
 import { UpdateNoteDto } from '@/dtos/update-note.dto';
+import { PaginationDto } from '@/dtos/pagination.dto';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
 import { authCheckMiddleware } from '@/middlewares/auth-check.middleware';
 import { User } from '@/database/entities/user.entity';
@@ -56,12 +58,16 @@ export class NoteController {
 	@Get('/')
 	async getAllNotes(
 		@Res() res: Response,
-		@Req() req: Request & { user: User }
+		@Req() req: Request & { user: User },
+		@QueryParams() paginationDto: PaginationDto
 	) {
-		const notes = await this.noteService.getAllNotes(req.user);
+		const result = await this.noteService.getAllNotes(
+			req.user,
+			paginationDto
+		);
 		return res.status(200).json({
 			message: 'Notes fetched successfully',
-			data: { notes },
+			data: result,
 		});
 	}
 

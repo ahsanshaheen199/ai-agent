@@ -3,6 +3,7 @@ import { Note } from '@/database/entities/note.entity';
 import { User } from '@/database/entities/user.entity';
 import { CreateNoteDto } from '@/dtos/create-note.dto';
 import { UpdateNoteDto } from '@/dtos/update-note.dto';
+import { PaginationDto } from '@/dtos/pagination.dto';
 import { BadRequestError, NotFoundError } from 'routing-controllers';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
@@ -89,15 +90,28 @@ export class NoteService {
 		return note;
 	}
 
-	async getAllNotes(user: User) {
+	async getAllNotes(user: User, paginationDto: PaginationDto) {
+		const page = paginationDto.page || 1;
+		const limit = paginationDto.limit || 10;
+		const skip = (page - 1) * limit;
+
 		try {
-			const notes = await this.noteRepository.find({
+			const [notes, total] = await this.noteRepository.findAndCount({
 				where: { user: { id: user.id } },
-				relations: ['user'],
 				order: { createdAt: 'DESC' },
+				skip,
+				take: limit,
 			});
 
-			return notes;
+			return {
+				notes,
+				pagination: {
+					page,
+					limit,
+					total,
+					totalPages: Math.ceil(total / limit),
+				},
+			};
 		} catch (error) {
 			throw new BadRequestError(error);
 		}
