@@ -4,12 +4,14 @@ import {
 	CreateDateColumn,
 	Entity,
 	OneToOne,
+	OneToMany,
 	PrimaryColumn,
 	UpdateDateColumn,
 } from 'typeorm';
 import { ulid } from 'ulid';
 import bcrypt from 'bcrypt';
 import { Subscription } from './subscription.entity';
+import { Note } from './note.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -36,6 +38,9 @@ export class User {
 
 	@OneToOne(() => Subscription, (subscription) => subscription.user)
 	subscription: Subscription;
+
+	@OneToMany(() => Note, (note) => note.user)
+	notes: Note[];
 
 	@BeforeInsert()
 	async beforeInsert() {
