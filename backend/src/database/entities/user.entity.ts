@@ -12,6 +12,7 @@ import { ulid } from 'ulid';
 import bcrypt from 'bcrypt';
 import { Subscription } from './subscription.entity';
 import { Note } from './note.entity';
+import { Chat } from './chat.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -41,6 +42,9 @@ export class User {
 
 	@OneToMany(() => Note, (note) => note.user)
 	notes: Note[];
+
+	@OneToMany(() => Chat, (chat) => chat.user)
+	chats: Chat[];
 
 	@BeforeInsert()
 	async beforeInsert() {

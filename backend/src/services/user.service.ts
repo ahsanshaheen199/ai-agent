@@ -93,4 +93,10 @@ export class UserService {
 
 		return user;
 	}
+
+	async getUserById(userId: string) {
+		return await this.userRepository.findOne({
+			where: { id: userId },
+		});
+	}
 }

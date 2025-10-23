@@ -6,7 +6,7 @@ import { UpdateNoteDto } from '@/dtos/update-note.dto';
 import { PaginationDto } from '@/dtos/pagination.dto';
 import { BadRequestError, NotFoundError } from 'routing-controllers';
 import { Service } from 'typedi';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 @Service()
 export class NoteService {
@@ -139,5 +139,22 @@ export class NoteService {
 		} catch (error) {
 			throw new BadRequestError(error);
 		}
+	}
+
+	async searchNotes(query: string, limit: number, user: User) {
+		return await this.noteRepository.find({
+			where: [
+				{ user: { id: user.id } },
+				{ title: ILike(`%${query}%`), content: ILike(`%${query}%`) },
+			],
+			order: { createdAt: 'DESC' },
+			take: limit,
+			select: {
+				id: true,
+				title: true,
+				content: true,
+				createdAt: true,
+			},
+		});
 	}
 }

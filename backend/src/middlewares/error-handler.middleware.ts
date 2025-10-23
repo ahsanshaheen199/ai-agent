@@ -11,7 +11,11 @@ import { Service } from 'typedi';
 @Middleware({ type: 'after' })
 export class CustomErrorHandler implements ExpressErrorMiddlewareInterface {
 	error(error: Error, request: Request, response: Response): Response {
-		console.log(`Error Occured on PATH: ${request.path}`, error);
+		// console.log(`Error Occured on PATH: ${request.path}`, error);
+
+		if (response.headersSent) {
+			return response;
+		}
 
 		if (error instanceof SyntaxError) {
 			return response.status(400).json({
@@ -28,14 +32,11 @@ export class CustomErrorHandler implements ExpressErrorMiddlewareInterface {
 		}
 
 		if (error instanceof HttpError) {
-			return response.status(error.httpCode).json({
-				message: error.message,
-			});
+			return response
+				.status(error.httpCode)
+				.json({ message: error.message });
 		}
 
-		return response.status(500).json({
-			message: 'Internal Server Error',
-			error: error?.message || 'Something went wrong',
-		});
+		return response.status(500).json({ message: 'Internal Server Error' });
 	}
 }
