@@ -1,5 +1,6 @@
 import { Header } from "@/components/dashboard/header";
 import { SmileIcon } from "lucide-react";
+import { RecentNotes } from "@/components/note/recent-notes";
 
 export default function HomePage() {
   return (
@@ -25,7 +26,7 @@ export default function HomePage() {
             <div className="w-full">
               <span className="text-sm dark:text-white/50">Recent Notes</span>
             </div>
-            {/* Recent Notes */}
+            <RecentNotes />
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import {
 } from 'ai';
 import { ToolService } from './tool.service';
 import { User } from '@/database/entities/user.entity';
+import { google } from '@ai-sdk/google';
 
 @Service()
 export class LLMService {
@@ -15,7 +16,7 @@ export class LLMService {
 
 	async generateTitleForNewChat(message: UIMessage) {
 		const { text } = await generateText({
-			model: 'google/gemini-2.5-flash',
+			model: google('gemini-2.5-flash'),
 			system: `\n
                 - you will generate a short title based on the first message a user begins a conversation with
                 - ensure it is not more than 80 characters long
@@ -34,7 +35,7 @@ export class LLMService {
 		selectedToolName?: string | null
 	) {
 		return streamText({
-			model: selectedModelId,
+			model: google('gemini-2.5-flash'),
 			system: this.getSystemPrompt(selectedToolName),
 			messages: convertToModelMessages(messages),
 			stopWhen: stepCountIs(5),

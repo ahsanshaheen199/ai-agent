@@ -8,7 +8,7 @@ type Props = {
 export const MainContent = ({ children }: Props) => {
   return (
     <>
-      <div className="relative w-full h-auto overflow-hidden">{children}</div>
+      <div className="flex flex-col flex-1">{children}</div>
     </>
   );
 };
